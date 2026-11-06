@@ -646,9 +646,7 @@
         const commentMessage = document.getElementById('commentMessage');
         const commentsList = null; // Dihapus karena tidak dipakai lagi
         const submitBtn = document.getElementById('submitCommentBtn');
-        const API_HOST = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "")
-            ? "http://localhost:5000"
-            : `${window.location.protocol}//${window.location.hostname}:5000`;
+        const API_HOST = "https://maduna-backend.vercel.app";
         const API_URL = `${API_HOST}/api/comments`; // Mengarah ke backend Express
 
         // Fungsi mekanisme rotasi data independen
