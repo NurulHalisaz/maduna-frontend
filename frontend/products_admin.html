@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Kelola Produk - Maduna</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="admin_global.css">
+    <link rel="stylesheet" href="products_admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-body">
+
+<div class="container-fluid p-0 d-flex min-vh-100 fade-in-up">
+
+    <!-- SIDEBAR (Offcanvas on Mobile, Persistent on Desktop) -->
+    <aside class="sidebar offcanvas-lg offcanvas-start bg-primary text-white p-4 d-flex flex-column" tabindex="-1" id="sidebarMenu" style="width: 280px; transition: 0.3s;">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div class="logo">
+                <h2 class="fw-bold mb-1">🍯 Maduna</h2>
+                <span class="opacity-75 small">Admin Panel</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+        </div>
+        <ul class="nav nav-pills flex-column mb-auto menu list-unstyled gap-2">
+            <li class="nav-item">
+                <a href="dashboard_admin.html" class="nav-link text-white menu-link d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-grid-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders_admin.html" class="nav-link text-white menu-link d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-cart-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Pesanan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="users_admin.html" class="nav-link text-white menu-link d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-people-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Pengguna</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="products_admin.html" class="nav-link text-white menu-link d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-box-seam-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Stok Produk</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="comments_admin.html" class="nav-link text-white menu-link d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-chat-left-text-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Komentar</span>
+                </a>
+            </li>
+            <li class="nav-item mt-auto" id="logoutBtn" style="cursor:pointer;">
+                <div class="nav-link text-white d-flex align-items-center rounded-3 px-3 py-2 opacity-75 hover-opacity-100">
+                    <i class="bi bi-box-arrow-right me-3 fs-5"></i>
+                    <span class="fw-medium">Logout</span>
+                </div>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content flex-grow-1 p-4 px-md-5 bg-body" style="min-width: 0;">
+        
+        <header class="topbar glass-header d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <button id="menuToggle" class="btn btn-outline-primary d-lg-none border-0 fs-4 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div>
+                    <h1 class="h3 fw-bold text-primary mb-1">Stok Produk</h1>
+                    <p class="text-muted mb-0 fw-medium">Kelola inventaris dan katalog produk</p>
+                </div>
+            </div>
+            <button class="btn btn-primary rounded-pill px-4 py-2 fw-semibold d-flex align-items-center shadow-sm" onclick="openAddModal()">
+                <i class="bi bi-plus-lg me-2"></i> Tambah Produk Baru
+            </button>
+        </header>
+
+        <!-- CARD SUMMARY -->
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <section class="summary-card card border-0 shadow-sm rounded-4 p-3 d-flex flex-row align-items-center gap-3">
+                    <div class="bg-success bg-opacity-10 text-success rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+                        <i class="bi bi-box-seam-fill fs-4"></i>
+                    </div>
+                    <div>
+                        <h6 class="card-subtitle mb-1 text-muted fw-semibold small">Total Produk</h6>
+                        <h4 id="totalProducts" class="card-title text-success fw-bold mb-0">0</h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- MAIN CARD TABLE -->
+        <section class="table-container card border-0 shadow-sm rounded-4 flex-grow-1 d-flex flex-column overflow-hidden mt-4">
+            
+            <!-- TOOLBAR: SEARCH & FILTER -->
+            <div class="card-header bg-white border-bottom border-light p-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-center">
+                <div class="d-flex align-items-center w-100">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted px-3"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchInput" class="form-control bg-light border-start-0 ps-0" placeholder="Cari nama produk...">
+                    </div>
+                </div>
+            </div>
+
+        <!-- TABLE SECTION -->
+        <div class="card-body p-0 d-flex flex-column">
+            <div class="table-responsive flex-grow-1 custom-scroll" style="max-height: 55vh;">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th class="border-0 px-4 py-3 fw-semibold text-dark" style="width: 5%;">ID</th>
+                            <th class="border-0 py-3 fw-semibold text-dark" style="width: 10%;">Gambar</th>
+                            <th class="border-0 py-3 fw-semibold text-dark w-25">Nama Produk</th>
+                            <th class="border-0 py-3 fw-semibold text-dark w-15">Volume</th>
+                            <th class="border-0 py-3 fw-semibold text-dark w-15">Harga</th>
+                            <th class="border-0 py-3 fw-semibold text-dark w-15">Stok</th>
+                            <th class="border-0 px-4 py-3 fw-semibold text-dark text-center" style="width: 15%;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTable" class="border-top-0">
+                        <!-- Data dimuat dari JS -->
+                        <tr class="skeleton-row"><td colspan="7" class="py-4"><div class="placeholder-glow"><span class="placeholder col-12"></span></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="7" class="py-4"><div class="placeholder-glow"><span class="placeholder col-12"></span></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="7" class="py-4"><div class="placeholder-glow"><span class="placeholder col-12"></span></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="card-footer bg-white border-top border-light p-3 d-flex justify-content-between align-items-center">
+            <span class="text-muted small fw-medium" id="paginationInfo">Menampilkan 0 produk</span>
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm mb-0" id="paginationContainer">
+                </ul>
+            </nav>
+        </div>
+
+    </section>
+    </main>
+</div>
+
+<!-- MODAL EDIT / TAMBAH PRODUK -->
+<div class="modal-custom" id="editModal">
+    <div class="modal-content-custom card border-0 shadow rounded-4 p-4 custom-scroll" style="max-height: 90vh; overflow-y: auto;">
+        <h5 class="fw-bold text-primary mb-4" id="modalTitle">Edit Produk</h5>
+
+        <input type="hidden" id="editId">
+
+        <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Nama Produk</label>
+            <input type="text" id="editName" class="form-control" placeholder="Nama Produk">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Kategori</label>
+            <input type="text" id="editCategory" class="form-control" placeholder="Kategori">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Volume</label>
+            <input type="text" id="editVolume" class="form-control" placeholder="Volume">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Gambar</label>
+            <input type="text" id="editImage" class="form-control mb-2" placeholder="Nama File Gambar" readonly>
+            <input type="file" id="editImageFile" class="form-control" accept="image/*">
+            <img id="previewImage" src="" alt="Preview" class="img-thumbnail mt-3 d-none shadow-sm" style="width: 120px; border-radius: 10px;">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Deskripsi</label>
+            <textarea id="editDescription" class="form-control custom-scroll" rows="3" placeholder="Deskripsi Produk"></textarea>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+                <label class="form-label text-muted small fw-semibold">Harga</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">Rp</span>
+                    <input type="number" id="editPrice" class="form-control border-start-0 ps-0" placeholder="Harga">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label text-muted small fw-semibold">Stok</label>
+                <input type="number" id="editStock" class="form-control" placeholder="Stok">
+            </div>
+        </div>
+
+        <div class="modal-buttons d-flex gap-2 justify-content-end mt-2">
+            <button id="cancelBtn" class="btn btn-outline-secondary px-4 fw-medium rounded-3">Batal</button>
+            <button id="saveBtn" class="btn btn-primary px-4 fw-medium rounded-3">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="config.js"></script>
+<script src="ux.js"></script>
+<script src="auth.js"></script>
+<script src="products_admin.js"></script>
+
+<script>
+    // Penyesuaian class d-none untuk gambar
+    const previewImage = document.getElementById('previewImage');
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutationRecord) {
+            if (previewImage.style.display === 'block' || previewImage.style.display === 'inline-block') {
+                previewImage.classList.remove('d-none');
+            } else if (previewImage.style.display === 'none') {
+                previewImage.classList.add('d-none');
+            }
+        });    
+    });
+    observer.observe(previewImage, { attributes : true, attributeFilter : ['style'] });
+</script>
+</body>
+</html>
