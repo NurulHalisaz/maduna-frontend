@@ -336,16 +336,8 @@ width:min(55vw,500px);
 
 <div class="circle"></div>
 
-<div class="people">
-
-<img src="assets/avatar.jpg" class="person" onclick="moveToRight(0)">
-
-<img src="assets/avatar.jpg" class="person" onclick="moveToRight(1)">
-
-<img src="assets/avatar.jpg" class="person" onclick="moveToRight(2)">
-
-<img src="assets/avatar.jpg" class="person" onclick="moveToRight(3)">
-
+<div class="people" id="people-container">
+<!-- Elemen gambar avatar akan digenerate otomatis sesuai jumlah data dari database -->
 </div>
 
 <div class="title">
@@ -373,199 +365,152 @@ Testimonial
 
 <script>
 
-const section =
-document.currentScript.previousElementSibling
+const section = document.currentScript.previousElementSibling;
 
-const data=[
-
+// Data awal (fallback jika database kosong atau sedang memuat)
+let data = [
 {
-name:"Dewi Kartika",
-role:"Pengguna Maduna",
-quote:"Bukan cuma enak, tapi terasa beda dari madu campuran yang sering dijual bebas."
-},
+name: "Memuat Data...",
+role: "Pengguna Maduna",
+quote: "Sedang mengambil data komentar dari database..."
+}
+];
 
-{
-name:"Andi Saputra",
-role:"Pelanggan Maduna",
-quote:"Madunya alami dan kualitasnya terasa berbeda."
-},
+const quote = section.querySelector("#quote");
+const name = section.querySelector("#name");
+const role = section.querySelector("#role");
+const peopleContainer = section.querySelector("#people-container");
 
-{
-name:"Siti Rahma",
-role:"Pengguna Maduna",
-quote:"Saya suka karena proses panennya transparan."
-},
+let imgs = [];
+let order = [];
+let activeUser = 0;
+let autoSlide;
 
-{
-name:"Rizky Pratama",
-role:"Pelanggan Maduna",
-quote:"Pengiriman aman dan kualitas tetap terjaga."
+// Fungsi untuk mengambil data komentar dari backend/database Supabase
+async function fetchCommentsFromDB() {
+    try {
+        // Ganti URL ini dengan URL backend Vercel Anda yang aktif
+        const response = await fetch('https://maduna-backend.vercel.app/api/comments');
+        const result = await response.json();
+        
+        if (result && result.length > 0) {
+            // Mapping data dari database (kolom 'name' dan 'content')
+            data = result.map(item => ({
+                name: item.name,
+                role: "Pengguna Maduna",
+                quote: item.content
+            }));
+        }
+    } catch (error) {
+        console.error("Gagal mengambil komentar dari database:", error);
+    } finally {
+        // Inisialisasi ulang elemen gambar avatar berdasarkan jumlah data yang didapat
+        initTestimonialElements();
+    }
 }
 
-]
+function initTestimonialElements() {
+    // Kosongkan container lalu buat tag img sejumlah data yang ada
+    peopleContainer.innerHTML = "";
+    
+    data.forEach((_, index) => {
+        const img = document.createElement("img");
+        img.src = "./assets/avatar.jpg";
+        img.className = "person";
+        img.setAttribute("onclick", `moveToRight(${index})`);
+        peopleContainer.appendChild(img);
+    });
 
-const imgs =
-section.querySelectorAll(".person")
-
-const quote =
-section.querySelector("#quote")
-
-const name =
-section.querySelector("#name")
-
-const role =
-section.querySelector("#role")
-
-let order=[0,1,2,3]
-
-let activeUser=0
-
-let autoSlide
-
-
+    imgs = section.querySelectorAll(".person");
+    
+    // Buat urutan indeks (0, 1, 2, dst)
+    order = data.map((_, i) => i);
+    
+    render();
+    restartAuto();
+}
 
 function getPositions(){
-
-const box =
-section.querySelector(".people")
-
-const size =
-box.offsetWidth
-
-const center =
-size/2
-
-const radius =
-size*0.38
-
-return [
-
-{x:center,y:center-radius},
-
-{x:center+radius,y:center},
-
-{x:center,y:center+radius},
-
-{x:center-radius,y:center}
-
-]
-
+    const box = section.querySelector(".people");
+    const size = box.offsetWidth;
+    const center = size / 2;
+    const radius = size * 0.38;
+    
+    // Generate posisi melingkar secara dinamis berdasarkan total data
+    const total = data.length;
+    let positions = [];
+    for(let i = 0; i < total; i++) {
+        const angle = (i * 2 * Math.PI) / total - Math.PI / 2;
+        positions.push({
+            x: center + radius * Math.cos(angle),
+            y: center + radius * Math.sin(angle)
+        });
+    }
+    return positions;
 }
-
-
 
 function render(){
+    if (data.length === 0) return;
+    
+    const positions = getPositions();
 
-const positions =
-getPositions()
+    imgs.forEach((img, i) => {
+        const p = positions[order[i]];
+        if(p) {
+            img.style.left = p.x + "px";
+            img.style.top = p.y + "px";
+        }
+        img.classList.remove("active");
+    });
 
-imgs.forEach((img,i)=>{
+    const active = order.indexOf(1);
+    if(imgs[active]) {
+        imgs[active].classList.add("active");
+    }
 
-const p =
-positions[order[i]]
+    const activeDataIndex = order.findIndex(pos => pos === 1);
+    const currentActive = activeDataIndex !== -1 ? activeDataIndex : 0;
 
-img.style.left =
-p.x+"px"
-
-img.style.top =
-p.y+"px"
-
-img.classList.remove(
-"active"
-)
-
-})
-
-const active =
-order.indexOf(1)
-
-imgs[active]
-.classList.add(
-"active"
-)
-
-quote.innerHTML =
-"“"+data[active].quote+"”"
-
-name.innerHTML =
-data[active].name
-
-role.innerHTML =
-data[active].role
-
+    quote.innerHTML = "“" + data[currentActive].quote + "”";
+    name.innerHTML = data[currentActive].name;
+    role.innerHTML = data[currentActive].role;
 }
 
-
-
-window.moveToRight=function(index){
-
-activeUser=index
-
-const posisi=
-order[index]
-
-const geser=
-(1-posisi+4)%4
-
-order=
-order.map(
-v=>(v+geser)%4
-)
-
-render()
-
-restartAuto()
-
+window.moveToRight = function(index){
+    activeUser = index;
+    const posisi = order[index];
+    const total = data.length;
+    const geser = (1 - posisi + total) % total;
+    
+    order = order.map(v => (v + geser) % total);
+    render();
+    restartAuto();
 }
-
-
 
 function nextAuto(){
-
-activeUser=
-(activeUser+1)%4
-
-moveToRight(
-activeUser
-)
-
+    activeUser = (activeUser + 1) % data.length;
+    moveToRight(activeUser);
 }
-
-
 
 function restartAuto(){
-
-clearInterval(
-autoSlide
-)
-
-autoSlide=
-setInterval(
-nextAuto,
-2000
-)
-
+    clearInterval(autoSlide);
+    autoSlide = setInterval(nextAuto, 3000);
 }
 
+window.addEventListener("resize", () => {
+    render();
+});
 
+// Jalankan pengambilan data saat halaman dimuat
+document.addEventListener("DOMContentLoaded", () => {
+    fetchCommentsFromDB();
+});
 
-window.addEventListener(
-"resize",
-()=>{
-
-render()
-
-}
-)
-
-
-
-setTimeout(()=>{
-
-render()
-
-restartAuto()
-
-},500)
+// Fallback jika skrip dimuat setelah DOMContentLoaded
+setTimeout(() => {
+    if(imgs.length === 0) {
+        fetchCommentsFromDB();
+    }
+}, 300);
 
 </script>
