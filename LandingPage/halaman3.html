@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MADUNA</title>
+    <style>
+        
+
+    .slider-container {
+        position: relative; 
+        overflow: hidden; 
+        height: 250px; 
+    }
+    .slide {
+    
+        position: absolute; 
+        width: 100%;
+        height: 100%;
+        opacity: 1; 
+        top: 0;
+        padding-right: 50px; 
+    }
+
+  
+    .slide-item {
+        transition: transform 1.6s ease-out, opacity 1.6s ease-out; 
+        opacity: 0; 
+        position: relative;
+    }
+
+
+    .slide-top {
+        transform: translateY(-20px); 
+    }
+
+   
+    .slide-bottom {
+        transform: translateY(20px);
+    }
+
+  
+    .slide.active .slide-top {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .slide.active .slide-bottom {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: 0.2s; 
+    }
+
+
+    
+        .image-slide {
+            transition: opacity 1s ease-in-out;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            top: 0;
+            left: 0;
+        }
+    .image-slide.active {
+        opacity: 1;
+    }
+
+ 
+    .nav-button {
+        position: absolute;
+        right: 0px; 
+        font-size: 1.5em; 
+        cursor: pointer;
+        background: transparent; 
+        color:  #0c8c70; 
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid  #0c8c70; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: all 0.2s ease-in-out; 
+    }
+    #prevBtn {
+        top: 20px;
+    }
+    #nextBtn {
+        top: 70px;
+    }
+    .nav-button:hover {
+        background-color: #E6F4F1; 
+        transform: scale(1.05);
+    }
+
+  
+        .fasilitas-wrapper {
+            width: 100%;
+            background: white; 
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+
+        .container-fasilitas {
+            max-width: 1200px;
+            margin: 0 auto; 
+            background: transparent; 
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .fasilitas-header-top {
+            color:  #0c8c70; 
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .fasilitas-header-main {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        .fasilitas-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .fasilitas-item {
+            width: 100%;
+            max-width: 250px; 
+            padding: 10px;
+            
+        }
+        .fasilitas-icon-box {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            background-color:    #0c8c70;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+        .fasilitas-icon-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .fasilitas-desc {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .icon-cutlery::after { content: "🍴"; }
+        .icon-passport::after { content: "🛂"; }
+        .icon-bag::after { content: "💼"; }
+        .icon-clock::after { content: "⏱️"; }
+    </style>
+</head>
+<body style="
+margin:0;
+min-height:100vh;
+font-family:Arial,sans-serif;
+
+background:
+linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)),
+url('assets/bg-maduna.jpeg');
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+">
+
+    <div style="max-width: 1200px; margin: 15px auto; padding: 30px; background-color: transparent;">
+        
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 50px;">
+
+            <div style="width: 100%; max-width: 450px;">
+                <div style=" height: 320px; position: relative; "> 
+                    
+                    <div id="image-slider-container" style="width: 100%; height: 100%;">
+
+                        <div class="image-slide active">
+                            <img src="assets/slide1.jpeg" alt="Gambar Slide 1" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        
+                        <div class="image-slide">
+                            <img src="assets/slide2.jpeg" alt="Gambar Slide 2" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <div class="image-slide">
+                            <video src="assets/slide3.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div style="width: 50%; flex-grow: 1; padding-top: 20px; position: relative;">
+                
+                <h2 style="font-size: 2.5em; color: #333; margin-top: 0; ">
+                    Perjalanan Madu Maduna
+                </h2>
+
+                <button class="nav-button" id="prevBtn" aria-label="Previous Slide">▲</button>
+                <button class="nav-button" id="nextBtn" aria-label="Next Slide">▼</button>
+
+
+                <div class="slider-container">
+
+                <div class="slide active">
+                    <p class="slide-item slide-top" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 20px;">
+                        Langkah 1 — Dari Hutan Latimojong. Perjalanan Maduna dimulai dari hutan alami Latimojong, tempat lebah liar menghasilkan madu secara alami tanpa campuran dan tanpa proses budidaya.
+                    </p>
+
+                    <p class="slide-item slide-bottom" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 40px;">
+                        Habitat yang masih terjaga membantu menghasilkan madu dengan kualitas alami, rasa khas, dan kemurnian yang tetap terpelihara.
+                    </p>
+                </div>
+
+
+                <div class="slide">
+                    <p class="slide-item slide-top" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 20px;">
+                        Langkah 2 — Dipanen Dengan Penuh Perhatian. Madu dipanen langsung dari sarang lebah hutan menggunakan proses yang menjaga kualitas dan mempertahankan keaslian setiap tetesnya.
+                    </p>
+
+                    <p class="slide-item slide-bottom" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 40px;">
+                        Setiap proses panen didokumentasikan untuk memberikan transparansi dan memastikan konsumen mengetahui asal produk yang mereka konsumsi.
+                    </p>
+                </div>
+
+
+                <div class="slide">
+                    <p class="slide-item slide-top" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 20px;">
+                        Langkah 3 — Dikemas Hingga Sampai Ke Tangan Anda. Setelah dipanen, Maduna dikemas secara higienis agar kualitas dan kemurniannya tetap terjaga.
+                    </p>
+
+                    <p class="slide-item slide-bottom" style="color: #444; font-size: 1.1em; line-height: 1.7; margin-bottom: 40px;">
+                        Dari hutan Latimojong hingga sampai ke rumah Anda, setiap tetes Maduna membawa cerita alam yang alami, transparan, dan terpercaya.
+                    </p>
+                </div>
+
+            </div>
+
+            </div>
+                
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const imageSlides = document.querySelectorAll('.image-slide'); 
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        let slideInterval;
+        const intervalTime = 7000; 
+        function showSlide(index) {
+            if (index >= slides.length) {
+                index = 0; 
+            } else if (index < 0) {
+                index = slides.length - 1; 
+            }
+
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            imageSlides.forEach(imageSlide => imageSlide.classList.remove('active'));
+            
+           
+            slides[index].classList.add('active');
+            imageSlides[index].classList.add('active'); 
+            
+            currentSlide = index;
+        }
+
+   
+        function startAutoSlide() {
+            clearInterval(slideInterval); 
+            slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, intervalTime);
+        }
+
+ 
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            startAutoSlide(); 
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+            startAutoSlide(); 
+        }
+
+    
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+     
+        showSlide(currentSlide);
+        startAutoSlide();
+    </script>
+
+<div class="fasilitas-wrapper">
+    <div class="container-fasilitas">
+
+        <div class="fasilitas-header-top">
+            MANFAAT MADUNA
+        </div>
+
+        <div class="fasilitas-header-main">
+            Kebaikan Alami Dalam Setiap Tetes
+        </div>
+
+        <div class="fasilitas-grid">
+            
+            <div class="fasilitas-item">
+                <div class="fasilitas-icon-box">
+                    <span class="icon-cutlery"></span>
+                </div>
+
+                <div class="fasilitas-icon-text">
+                    Menjaga Daya Tahan Tubuh
+                </div>
+
+                <div class="fasilitas-desc">
+                    Madu dikenal sebagai sumber alami yang membantu menjaga daya tahan tubuh sehari-hari.
+                </div>
+            </div>
+
+
+            <div class="fasilitas-item">
+                <div class="fasilitas-icon-box">
+                    <span class="icon-clock"></span>
+                </div>
+
+                <div class="fasilitas-icon-text">
+                    Sumber Energi Alami
+                </div>
+
+                <div class="fasilitas-desc">
+                    Kandungan gula alami pada madu dapat membantu memberikan tambahan energi untuk beraktivitas.
+                </div>
+            </div>
+
+
+            <div class="fasilitas-item">
+                <div class="fasilitas-icon-box">
+                    <span class="icon-passport"></span>
+                </div>
+
+                <div class="fasilitas-icon-text">
+                    Membantu Menjaga Fokus
+                </div>
+
+                <div class="fasilitas-desc">
+                    Konsumsi madu sering dikaitkan dengan membantu menjaga konsentrasi dan kebugaran tubuh.
+                </div>
+            </div>
+
+
+            <div class="fasilitas-item">
+                <div class="fasilitas-icon-box">
+                    <span class="icon-bag"></span>
+                </div>
+
+                <div class="fasilitas-icon-text">
+                    Membantu Menjaga Nafsu Makan
+                </div>
+
+                <div class="fasilitas-desc">
+                    Madu sering digunakan sebagai pelengkap konsumsi harian untuk membantu pola makan yang baik.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
