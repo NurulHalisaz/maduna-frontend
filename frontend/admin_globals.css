@@ -1,0 +1,298 @@
+/* =========================================
+   ADMIN GLOBAL CSS
+   Pusat Desain & Utilitas untuk Admin Panel
+========================================= */
+
+:root {
+    --bg: #FFF8ED;
+    --primary: #0F5C3A;
+    --primary-dark: #0A4229;
+    --secondary: #A65A00;
+    --white: #FFFFFF;
+    --text: #333333;
+    --danger: #DC3545;
+    --success: #198754;
+    --warning: #FFC107;
+    --info: #0dcaf0;
+    --sidebar-grad: linear-gradient(180deg, #0F5C3A 0%, #0A4229 100%);
+}
+
+body {
+    background-color: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* =========================================
+   ANIMASI GLOBAL (FADE IN UP)
+========================================= */
+.fade-in-up {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   TYPOGRAPHY & COLORS OVERRIDE
+========================================= */
+.text-primary { color: var(--primary) !important; }
+.bg-primary { background-color: var(--primary) !important; }
+.text-secondary { color: var(--secondary) !important; }
+.bg-secondary { background-color: var(--secondary) !important; }
+.text-success { color: var(--success) !important; }
+.bg-success { background-color: var(--success) !important; }
+.text-warning { color: var(--warning) !important; }
+.bg-warning { background-color: var(--warning) !important; }
+.text-danger { color: var(--danger) !important; }
+.bg-danger { background-color: var(--danger) !important; }
+
+/* =========================================
+   BUTTONS
+========================================= */
+.btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 0.5rem;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn:active {
+    transform: translateY(0);
+}
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: white;
+}
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+.btn-success {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+.btn-success:hover {
+    background-color: #146c43;
+    border-color: #13653f;
+    color: white;
+}
+
+/* =========================================
+   INPUT & FORM
+========================================= */
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(15, 92, 58, 0.25);
+}
+
+/* =========================================
+   CARDS & CONTAINERS
+========================================= */
+.card {
+    border-radius: 1rem !important; /* 16px */
+    border: none !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08) !important;
+}
+
+/* =========================================
+   SIDEBAR & HEADER
+========================================= */
+.sidebar {
+    background: var(--sidebar-grad) !important;
+    transition: all 0.3s ease;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+}
+.menu-link {
+    transition: all 0.3s ease;
+}
+.menu-link.active, .menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--white) !important;
+    transform: translateX(5px);
+}
+.hover-opacity-100:hover {
+    opacity: 1 !important;
+    transform: translateX(5px);
+}
+
+
+
+/* Glass Header */
+.glass-header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 248, 237, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1020;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .glass-header {
+        margin-left: -3rem;
+        margin-right: -3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+/* =========================================
+   TABLE & SCROLLBAR
+========================================= */
+.custom-scroll::-webkit-scrollbar {
+    width: 6px; height: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+    background: transparent; 
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 10px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+tbody:empty::after {
+    content: "Tidak ada data.";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 150px;
+    color: #94a3b8;
+    font-style: italic;
+    font-weight: 500;
+    position: absolute;
+    left: 0;
+}
+
+/* Pagination Override */
+.pagination {
+    --bs-pagination-color: var(--primary);
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-border-color: var(--primary);
+    --bs-pagination-hover-color: var(--secondary);
+}
+
+/* Table JS Buttons */
+table button {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    gap: 6px; font-weight: 500; text-align: center; white-space: nowrap;
+    border: 1px solid var(--primary);
+    padding: 0.35rem 0.85rem; font-size: 0.875rem; border-radius: 0.5rem;
+    color: var(--primary); background-color: transparent;
+    transition: all 0.2s ease; margin-right: 5px; font-family: 'Poppins', sans-serif;
+}
+table button:hover {
+    color: #fff; background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(15, 92, 58, 0.2);
+}
+table button:nth-of-type(2), table button.btn-delete {
+    border-color: var(--danger); color: var(--danger);
+}
+table button:nth-of-type(2):hover, table button.btn-delete:hover {
+    background-color: var(--danger); color: white;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+}
+
+/* Injeksi Ikon Bootstrap via CSS (Hanya untuk JS Buttons) */
+table button::before {
+    font-family: "bootstrap-icons";
+    font-weight: normal !important;
+}
+table button:first-of-type::before, table button.btn-edit::before {
+    content: "\F4CB"; /* bi-pencil-square */
+}
+table button:nth-of-type(2)::before, table button.btn-delete::before {
+    content: "\F5DE"; /* bi-trash3 / bi-x-circle */
+}
+
+/* =========================================
+   STATUS BADGES & ROLES
+========================================= */
+.status, .role-admin, .role-customer {
+    padding: 6px 14px; border-radius: 50rem; font-size: 12px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+}
+.status::before, .role-admin::before, .role-customer::before {
+    content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+}
+
+.pending { background-color: #FFF3CD; color: #856404; }
+.pending::before { background-color: #856404; }
+
+.shipped, .dikirim { background-color: #D1ECF1; color: #0C5460; }
+.shipped::before, .dikirim::before { background-color: #0C5460; }
+
+.done, .selesai { background-color: #D4EDDA; color: #155724; }
+.done::before, .selesai::before { background-color: #155724; }
+
+.cancel, .dibatalkan { background-color: #F8D7DA; color: #721C24; }
+.cancel::before, .dibatalkan::before { background-color: #721C24; }
+
+.role-admin { background-color: #D1ECF1; color: #0C5460; }
+.role-admin::before { background-color: #0C5460; }
+
+.role-customer { background-color: #E2E3E5; color: #383D41; }
+.role-customer::before { background-color: #383D41; }
+
+/* =========================================
+   MODAL
+========================================= */
+.modal-custom {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5); z-index: 1050; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+}
+.modal-content-custom {
+    background: white; width: 90%; max-width: 450px;
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes scaleIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Miscellaneous */
+.product-img {
+    width: 48px; height: 48px; object-fit: cover; border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
