@@ -2,7 +2,7 @@
 // CEK LOGIN CUSTOMER & KONFIGURASI
 // ==========================================
 
-const API_ENDPOINT = window.API_BASE || "http://localhost:5000";
+const API_ENDPOINT = "https://maduna-backend.vercel.app";
 const WHATSAPP_PHONE = window.WHATSAPP_NUMBER || "6285391832772";
 
 function getCustomerProfile() {
