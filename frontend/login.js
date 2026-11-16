@@ -90,7 +90,7 @@ function showRegisterSuccess(msg) {
 // KONFIGURASI API
 // =========================
 
-const API_ENDPOINT = window.API_BASE || "http://localhost:5000";
+const API_ENDPOINT = "https://maduna-backend.vercel.app";
 
 // =========================
 // LOGIN
@@ -166,6 +166,7 @@ document
         } else {
             window.location.href = "dashboard_customer.html";
         }
+        
 
     } catch (error) {
 
