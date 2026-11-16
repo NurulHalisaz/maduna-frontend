@@ -1,5 +1,4 @@
-const API_ENDPOINT = window.API_BASE || "http://localhost:5000";
-
+const API_ENDPOINT = "https://maduna-backend.vercel.app";
 const token = new URLSearchParams(window.location.search).get("token");
 const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
