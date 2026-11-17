@@ -1,3 +1,8 @@
+// ====================
+// SETUP KONEKSI API
+// ====================
+// Coba ambil URL dari config.js, jika tidak ada, gunakan URL Vercel secara langsung
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 const token = localStorage.getItem("token");
 
 // ====================
@@ -14,7 +19,8 @@ async function loadComments() {
     const totalEl = document.getElementById("totalComments");
 
     try {
-        const response = await fetch("http://localhost:5000/api/comments", {
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/comments`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -152,7 +158,8 @@ window.deleteComment = async function(id) {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                const response = await fetch(`http://localhost:5000/api/comments/${id}`, {
+                // PERBAIKAN: Gunakan API_ENDPOINT
+                const response = await fetch(`${API_ENDPOINT}/api/comments/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -195,7 +202,29 @@ if (refreshBtn) {
 }
 
 // ====================
+// TOAST NOTIFICATION UTILITY
+// ====================
+function showToast(message, type = "success") {
+    // Pastikan Anda memiliki framework Toast di HTML (misal SweetAlert2 mixin atau Bootstrap Toast)
+    // Jika tidak ada, fallback ke Swal.fire standard
+    if (typeof Swal !== 'undefined') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        Toast.fire({
+            icon: type,
+            title: message
+        });
+    } else {
+        alert(message);
+    }
+}
+
+// ====================
 // INIT
 // ====================
-
 loadComments();
