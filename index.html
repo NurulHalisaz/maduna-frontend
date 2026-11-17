@@ -422,6 +422,7 @@
                     <!-- Element untuk pesan sukses atau error -->
                     <div id="commentMessage" style="margin-top: 10px; font-size: 0.9rem;"></div>
                 </form>
+            <div id="commentsList" class="comments-container"></div>
 
 
             </div>
@@ -634,9 +635,11 @@
         const commentName = document.getElementById('commentName');
         const commentContent = document.getElementById('commentContent');
         const commentMessage = document.getElementById('commentMessage');
-        const commentsList = null; // Dihapus karena tidak dipakai lagi
+        const commentsList = document.getElementById('commentsList'); // Container untuk menampilkan daftar komentar
         const submitBtn = document.getElementById('submitCommentBtn');
-        const API_URL = 'https://maduna-backend.vercel.app/api/comments';
+        const PRODUCTION_API = 'https://maduna-backend.vercel.app/api/comments';
+const LOCAL_API = 'http://localhost:5000/api/comments';
+const API_URL = location.hostname.includes('localhost') ? LOCAL_API : PRODUCTION_API; // Pilih endpoint otomatis
 
         // Fungsi mekanisme rotasi data independen
         function startDataRotation() {
