@@ -1,3 +1,8 @@
+// ==========================================
+// API SETUP
+// ==========================================
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
+
 const token = new URLSearchParams(window.location.search).get("token");
 
 // Periksa apakah token ada di URL saat halaman dimuat
@@ -57,7 +62,8 @@ if (resetBtn) {
         resetBtn.textContent = "Menyimpan...";
 
         try {
-            const response = await fetch("http://localhost:5000/api/reset-password", {
+            // PERBAIKAN: Menggunakan API_ENDPOINT
+            const response = await fetch(`${API_ENDPOINT}/api/reset-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
