@@ -1,7 +1,7 @@
 // ==========================================
-// CEK LOGIN CUSTOMER
+// CEK LOGIN CUSTOMER & API SETUP
 // ==========================================
-
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 const NAMA_PELANGGAN_AKTIF = localStorage.getItem("name") || "Pelanggan";
 const USER_ID = localStorage.getItem("userId");
 
@@ -53,7 +53,8 @@ async function loadProducts() {
     productContainer.innerHTML = "<div class='loading-text' style='grid-column: 1 / -1; text-align: center; padding: 2rem;'>Memuat produk...</div>";
 
     try {
-        const response = await fetch("http://localhost:5000/api/products");
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/products`);
         if (!response.ok) {
             throw new Error(`Gagal memuat produk (${response.status})`);
         }
@@ -155,7 +156,18 @@ function addToCart(id, nama, harga) {
     }
 
     updateCartUI();
-    showToast(`${nama} ditambahkan ke keranjang!`, "success");
+    // Menggunakan SweetAlert2 Toast untuk pop-up sukses menambahkan
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+    Toast.fire({
+        icon: 'success',
+        title: `${nama} ditambahkan ke keranjang!`
+    });
 }
 
 function removeFromCart(id) {
@@ -294,7 +306,8 @@ async function checkoutWA() {
             }))
         };
 
-        const response = await fetch("http://localhost:5000/api/orders", {
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -396,7 +409,8 @@ async function renderHistory() {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/orders/history/${USER_ID}`, {
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/orders/history/${USER_ID}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
