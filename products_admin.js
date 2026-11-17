@@ -1,3 +1,7 @@
+// ======================
+// API SETUP & INIT
+// ======================
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 const token = localStorage.getItem("token");
 
 let allProducts = [];
@@ -11,7 +15,8 @@ async function loadProducts() {
     const totalEl = document.getElementById("totalProducts");
 
     try {
-        const response = await fetch("http://localhost:5000/api/products");
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/products`);
         if (!response.ok) {
             throw new Error(`Gagal memuat produk (${response.status})`);
         }
@@ -129,7 +134,7 @@ searchProductInput?.addEventListener('input', applyProductFilters);
 // MODAL EDIT
 // ======================
 
-function openEditModal(id, name, category, volume, description, image, price, stock) {
+window.openEditModal = function(id, name, category, volume, description, image, price, stock) {
     const modal = document.getElementById("editModal");
     if (modal) modal.style.display = "flex";
 
@@ -141,7 +146,7 @@ function openEditModal(id, name, category, volume, description, image, price, st
     document.getElementById("editImage").value = image || "";
     document.getElementById("editPrice").value = price || "";
     document.getElementById("editStock").value = stock || "";
-}
+};
 
 // ======================
 // TOMBOL TAMBAH PRODUK
@@ -246,7 +251,8 @@ if (saveBtn) {
         }
 
         const isNewProduct = id === "";
-        const url = isNewProduct ? "http://localhost:5000/api/products" : `http://localhost:5000/api/products/${id}`;
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const url = isNewProduct ? `${API_ENDPOINT}/api/products` : `${API_ENDPOINT}/api/products/${id}`;
         const method = isNewProduct ? "POST" : "PUT";
 
         saveBtn.disabled = true;
@@ -284,7 +290,22 @@ if (saveBtn) {
             }
 
             document.getElementById("editModal").style.display = "none";
-            showToast(isNewProduct ? "Produk berhasil ditambahkan!" : "Produk berhasil diperbarui!", "success");
+            
+            // Fallback showToast
+            if (typeof showToast === 'function') {
+                showToast(isNewProduct ? "Produk berhasil ditambahkan!" : "Produk berhasil diperbarui!", "success");
+            } else if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: isNewProduct ? "Produk berhasil ditambahkan!" : "Produk berhasil diperbarui!",
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+
             loadProducts();
 
         } catch (error) {
@@ -320,7 +341,8 @@ window.deleteProduct = async function(id) {
         if (result.isConfirmed) {
             try {
                 const token = localStorage.getItem("token");
-                const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+                // PERBAIKAN: Gunakan API_ENDPOINT
+                const response = await fetch(`${API_ENDPOINT}/api/products/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -337,7 +359,21 @@ window.deleteProduct = async function(id) {
                     throw new Error(data.message || "Gagal menghapus produk");
                 }
 
-                showToast("Produk berhasil dihapus!", "success");
+                // Fallback showToast
+                if (typeof showToast === 'function') {
+                    showToast("Produk berhasil dihapus!", "success");
+                } else if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: "Produk berhasil dihapus!",
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+
                 loadProducts();
 
             } catch (error) {
