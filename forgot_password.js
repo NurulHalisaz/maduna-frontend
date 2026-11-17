@@ -1,3 +1,8 @@
+// ==========================================
+// API SETUP
+// ==========================================
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
+
 const sendBtn = document.getElementById("sendBtn");
 const emailInput = document.getElementById("email");
 
@@ -30,7 +35,8 @@ if (sendBtn) {
         sendBtn.textContent = "Mengirim...";
 
         try {
-            const response = await fetch("http://localhost:5000/api/forgot-password", {
+            // PERBAIKAN: Menggunakan API_ENDPOINT
+            const response = await fetch(`${API_ENDPOINT}/api/forgot-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
