@@ -1,6 +1,7 @@
 // ====================
-// ELEMENT
+// API SETUP & ELEMENT
 // ====================
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 
 const table = document.getElementById("ordersTable");
 const modal = document.getElementById("statusModal");
@@ -20,7 +21,8 @@ async function loadOrders() {
     if (!table) return;
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:5000/api/admin/orders", {
+        // PERBAIKAN: Gunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/admin/orders`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -170,108 +172,5 @@ if (saveStatusBtn) {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:5000/api/admin/orders/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({ status: newStatus })
-            });
-
-            let data;
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                data = await response.json();
-            } else {
-                data = { message: "Gagal memperbarui status" };
-            }
-
-            if (!response.ok) {
-                throw new Error(data.message || "Gagal mengubah status pesanan");
-            }
-
-            if (modal) modal.style.display = "none";
-            showToast("Status pesanan berhasil diperbarui!", "success");
-            loadOrders();
-
-        } catch (error) {
-            console.error("Gagal update status pesanan:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal Update',
-                text: error.message || 'Terjadi kesalahan saat memperbarui status pesanan.',
-                confirmButtonColor: '#0F5C3A'
-            });
-        } finally {
-            saveStatusBtn.disabled = false;
-            saveStatusBtn.textContent = "Simpan Perubahan";
-        }
-    });
-}
-
-// ====================
-// BATALKAN PESANAN
-// ====================
-
-window.cancelOrder = async function(id) {
-    Swal.fire({
-        title: 'Yakin batalkan pesanan?',
-        text: 'Pesanan yang dibatalkan tidak dapat dikembalikan.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#DC3545',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Ya, Batalkan',
-        cancelButtonText: 'Tutup'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            try {
-                const token = localStorage.getItem("token");
-                const response = await fetch(`http://localhost:5000/api/admin/orders/${id}/cancel`, {
-                    method: "PUT",
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-
-                let data;
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    data = await response.json();
-                } else {
-                    data = { message: "Gagal membatalkan pesanan" };
-                }
-
-                if (!response.ok) {
-                    throw new Error(data.message || "Gagal membatalkan pesanan");
-                }
-
-                showToast("Pesanan berhasil dibatalkan!", "success");
-                loadOrders();
-
-            } catch (error) {
-                console.error("Gagal membatalkan pesanan:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal Membatalkan',
-                    text: error.message || 'Terjadi kesalahan saat membatalkan pesanan.',
-                    confirmButtonColor: '#0F5C3A'
-                });
-            }
-        }
-    });
-};
-
-// ====================
-// REFRESH
-// ====================
-
-const refreshBtn = document.getElementById("refreshBtn");
-if (refreshBtn) {
-    refreshBtn.addEventListener("click", loadOrders);
-}
-
-// ====================
-// INIT
-// ====================
-
-loadOrders();
+            // PERBAIKAN: Gunakan API_ENDPOINT
+            const response = await fetch(`${API_ENDPOINT}/api/admin/orders/${id}`,
