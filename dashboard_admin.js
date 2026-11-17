@@ -1,12 +1,12 @@
 // ==========================
 // LOAD USER
 // ==========================
-
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 async function loadUsers() {
     const totalUsersEl = document.getElementById("totalUsers");
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:5000/api/admin/users", {
+        const response = await fetch(`${API_ENDPOINT}/api/admin/users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -43,7 +43,7 @@ async function loadOrders() {
 
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:5000/api/admin/orders", {
+        const response = await fetch(`${API_ENDPOINT}/api/admin/orders`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -224,7 +224,7 @@ async function loadOrders() {
 async function loadProduct() {
     const totalStockEl = document.getElementById("totalStock");
     try {
-        const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch(`${API_ENDPOINT}/api/products`);
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -269,7 +269,7 @@ if (downloadReportBtn) {
     downloadReportBtn.addEventListener("click", async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:5000/api/admin/orders", {
+            const response = await fetch(`${API_ENDPOINT}/api/admin/orders`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
