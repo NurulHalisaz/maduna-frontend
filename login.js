@@ -1,4 +1,9 @@
 // =========================
+// URL BACKEND UTAMA
+// =========================
+const API_ENDPOINT = "https://maduna-backend.vercel.app";
+
+// =========================
 // SLIDER LOGIN & SIGNUP
 // =========================
 
@@ -62,7 +67,8 @@ if (loginForm) {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/login", {
+            // MENGGUNAKAN API_ENDPOINT VERCEL
+            const response = await fetch(`${API_ENDPOINT}/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -191,7 +197,8 @@ if (signupForm) {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/register", {
+            // MENGGUNAKAN API_ENDPOINT VERCEL
+            const response = await fetch(`${API_ENDPOINT}/api/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
