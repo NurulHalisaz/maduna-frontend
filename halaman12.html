@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maduna - 100% Murni</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* === Variabel Warna & Font === */
+        :root {
+            --primary-green: #2B5A39; 
+            --bg-navbar: #FCF8F2;     
+            --text-dark: #111111;
+            --text-brown: #332111;    
+            --line-color: #3D2E1F;    
+            --text-light: #FFFFFF;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif; 
+            --navbar-height: 100px; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background-color: var(--bg-navbar);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* =========================================
+           1. NAVBAR SECTION
+           ========================================= */
+        .navbar {
+            background-color: var(--bg-navbar);
+            height: var(--navbar-height); 
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-heading);
+            font-size: 56px; 
+            font-weight: 700;
+            color: #000000; 
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary-green); }
+
+        .btn-pesan {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .btn-pesan:hover { background-color: #1f4229; }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* =========================================
+           2. HERO SECTION (HALAMAN 1)
+           ========================================= */
+        .hero {
+            display: grid;
+            width: 100%;
+            background-color: #0c1f13; 
+        }
+
+        .hero > * {
+            grid-column: 1 / -1;
+            grid-row: 1 / -1;
+        }
+
+        .hero-bg-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block; 
+        }
+
+        .hero-overlay {
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            z-index: 10;
+        }
+
+        .hero-content {
+            max-width: 800px; 
+            color: var(--text-light);
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: 56px; 
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7); 
+        }
+
+        .hero-content p {
+            font-family: var(--font-body);
+            font-size: 28px; 
+            font-weight: 600; 
+            color: #FFFFFF; 
+            line-height: 1.5;
+            margin-bottom: 35px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8); 
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover { background-color: #1f4229; }
+
+        /* =========================================
+           3. ABOUT SECTION (HALAMAN 2)
+           ========================================= */
+        .about-section {
+            background: url('./assets/bg-about.png') center center/cover no-repeat;
+            background-color: #FFFDF9; 
+            padding: 100px 5% 180px 5%;
+        }
+
+        .container {
+            max-width: 1600px; /* Lebar maksimal diperbesar untuk menampung teks lebar dan botol besar */
+            margin: 0 auto;
+        }
+
+        .section-title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px; 
+            margin-bottom: 40px;
+        }
+
+        .title-line {
+            height: 10px; 
+            background-color: var(--line-color);
+            flex: 1; 
+            max-width: 450px; 
+        }
+
+        .section-title-wrapper h2 {
+            font-family: var(--font-heading);
+            font-size: 56px; 
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .section-description {
+            font-family: var(--font-body);
+            text-align: center;
+            max-width: 1300px; 
+            margin: 0 auto 70px auto;
+            color: var(--text-brown);
+            font-size: 24px; 
+            line-height: 1.6;
+            font-weight: 500; 
+        }
+
+        /* Layout Grid 3 Kolom - Lebar kolom dikunci dengan ukuran tetap untuk teks agar letak potongannya sempurna */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 550px 1fr 500px; /* Teks kiri 550px, botol fluid di tengah, teks kanan 500px */
+            gap: 20px; 
+            align-items: center; 
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: flex-start; 
+            gap: 20px;
+        }
+
+        .feature-icon {
+            width: 80px; 
+            height: auto;
+            object-fit: contain;
+            flex-shrink: 0; 
+        }
+
+        .feature-title {
+            font-family: var(--font-body);
+            color: var(--primary-green);
+            font-size: 32px; 
+            line-height: 1.3;
+            font-weight: 700;
+            margin-top: 5px; 
+        }
+
+       .feature-text{
+
+            font-size:
+
+            clamp(
+            16px,
+            1.5vw,
+            18px
+            );
+
+            line-height:1.8;
+
+            color:#666;
+
+        }
+
+        /* Gambar Botol - Diturunkan dan Diperbesar secara ekstrem */
+        .feature-center-image {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            margin-top: 80px; /* Diturunkan kebawah */
+        }
+
+        .feature-center-image img {
+            width: 100%;
+            max-width: 600px; /* Diperbesar sangat besar */
+            height: auto;
+            filter: drop-shadow(0 20px 35px rgba(0,0,0,0.2)); 
+            transform: scale(1.4); /* Efek skala ditambahkan */
+            transform-origin: center center;
+        }
+
+        /* =========================================
+           4. RESPONSIVITAS (Tablet & Mobile)
+           ========================================= */
+        @media (max-width: 1600px) {
+            .features-grid { grid-template-columns: 480px 1fr 450px; gap: 30px; }
+            .feature-title { font-size: 28px; }
+            .feature-text { font-size: 24px; }
+        }
+
+        @media (max-width: 1300px) {
+            .logo { font-size: 48px; }
+            .hero-content h1 { font-size: 48px; }
+            .section-title-wrapper h2 { font-size: 48px; }
+            .hero-content p { font-size: 24px; }
+            .section-description { font-size: 20px; }
+            .feature-center-image img { transform: scale(1.2); } 
+            .features-grid { grid-template-columns: 1fr 400px 1fr; gap: 20px; }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links { gap: 15px; }
+            .features-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .feature-center-image { grid-column: 1 / -1; order: 3; margin-top: 80px; }
+            .title-line { max-width: 250px; }
+            .feature-center-image img { transform: scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 80px; } 
+            :root { --navbar-height: 80px; } 
+            .logo { font-size: 32px; } 
+            
+            .mobile-menu-btn { display: block; }
+            .nav-links, .btn-pesan { display: none; } 
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: var(--navbar-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-navbar);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+            .btn-pesan.active {
+                display: flex;
+                margin: 10px 20px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .hero-overlay { padding: 40px 5%; text-align: center; justify-content: center; }
+            .hero-content h1 { font-size: 36px; }
+            .hero-content p { font-size: 18px; }
+            
+            .about-section { padding: 50px 5%; }
+            .section-title-wrapper h2 { font-size: 36px; margin: 0 10px; }
+            .title-line { height: 6px; }
+            .section-description { font-size: 16px; }
+            
+            .features-grid { grid-template-columns: 1fr; gap: 40px; }
+            .feature-center-image { order: 1; margin-bottom: 40px; margin-top: 20px; } 
+            .feature-item { order: 2; }
+            
+            .feature-title { font-size: 24px; }
+            .feature-text { font-size: 18px; }
+            .feature-center-image img { max-width: 350px; transform: scale(1.1); } 
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="#" class="logo">MADUNA</a>
+        <nav class="nav-links" id="navLinks">
+            <a href="#">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#">Testimoni</a>
+            <a href="#">Komentar</a>
+        </nav>
+        <a href="#" class="btn-pesan" id="btnPesan">Pesan</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg-wrapper">
+            <img src="./assets/bg-maduna.png" alt="Background Maduna">
+        </div>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>100% MURNI</h1>
+                <p>Madu Hutan Latimojong Dipanen Murni Dari Hutan Tanpa polusi</p>
+                <a href="#about" class="btn-primary">Hubungi Kami</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container">
+            
+            <div class="section-title-wrapper">
+                <div class="title-line"></div>
+                <h2>MADUNA</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <p class="section-description">
+                Dipanen langsung dari Gunung Latimojong, menghadirkan madu hutan asli dari kawasan alam yang masih terjaga dan kaya akan sumber nektar murni. Pilihan produk kesehatan alami, untuk mendampingi gaya hidup sehat sehari-hari.
+            </p>
+
+            <div class="features-grid">
+                
+                <div class="feature-item">
+                    <div class="feature-header">
+                        <img src="./assets/ikon-lebah.png" class="feature-icon" alt="Ikon Lebah">
+                        <h3 class="feature-title">Diproduksi Alami oleh<br>Lebah Apis Dorsata</h3>
+                    </div>
+                    <p class="feature-text">
+                        Dihasilkan secara alami oleh<br>
+                        lebah hutan Apis Dorsata,<br>
+                        menghasilkan madu berkualitas<br>
+                        tinggi tanpa camputan bahan<br>
+                        tambahan.
+                    </p>
+                </div>
+
+                <div class="feature-center-image">
+                    <img src="./assets/botol-splashes.png" alt="Botol Maduna">
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-header">
+                        <img src="./assets/ikon-madu.png" class="feature-icon" alt="Ikon Madu">
+                        <h3 class="feature-title">100 % Murni, Tanpa<br>Campuran</h3>
+                    </div>
+                    <p class="feature-text">
+                        Madu murni tanpa tambahan<br>
+                        gula, pengawet, maupun bahan<br>
+                        sintetis lainnya. Hanya madu<br>
+                        asli, langsung dari alam.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const btnPesan = document.getElementById('btnPesan');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            btnPesan.classList.toggle('active');
+        });
+    </script>
+
+</body>
+
+</html>

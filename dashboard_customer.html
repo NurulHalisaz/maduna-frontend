@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Pelanggan | Maduna</title>
+    <link rel="stylesheet" href="dashboard_customer.css">
+</head>
+<body>
+
+    <!-- Navigasi Atas -->
+    <nav class="navbar">
+        <div class="nav-brand">MADUNA</div>
+        <div class="nav-user">
+            <!-- Tombol Keranjang -->
+            <button class="btn-cart" onclick="toggleCart()">🛒 Keranjang (<span id="cartCount">0</span>)</button>
+            <button class="btn-history" onclick="toggleHistory()">📦 Riwayat</button>
+            <span id="userNameGreeting" style="display:none;">Halo, Pelanggan 👋</span>
+            <button onclick="handleLogout()" class="btn-logout">Keluar</button>
+        </div>
+    </nav>
+
+    <!-- Konten Utama Dashboard -->
+    <main class="dashboard-wrapper">
+        <header class="dashboard-header">
+            <h1>Pilihan Paket Maduna</h1>
+            <p>Lebih hemat dengan paket bundling. Semua produk berukuran 250ml.</p>
+        </header>
+
+        <!-- Area Kartu Produk (Di-render melalui JS) -->
+        <section class="product-grid" id="productContainer">
+            <div class="loading-text">Memuat paket produk...</div>
+        </section>
+    </main>
+
+    <!-- Modal Keranjang Belanja -->
+    <div id="cartModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keranjang Belanja</h2>
+                <span class="close-modal" onclick="toggleCart()">&times;</span>
+            </div>
+            <div id="cartItems" class="cart-items-container">
+                <!-- Isi keranjang akan muncul di sini -->
+            </div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cartTotalPrice">Rp 0</span></h3>
+                <button class="btn-checkout" onclick="checkoutWA()">Checkout via WA</button>
+            </div>
+        </div>
+    </div>
+    <div id="historyModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Riwayat Pesanan Saya</h2>
+                <span class="close-modal" onclick="toggleHistory()">&times;</span>
+            </div>
+            <div class="history-table-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tanggal</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyItems">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="ux.js"></script>
+    <script src="auth.js"></script>
+    <script src="dashboard_customer.js"></script>
+</body>
+</html>

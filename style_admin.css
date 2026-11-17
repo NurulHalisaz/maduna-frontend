@@ -1,0 +1,27 @@
+/* Styling Tabel Admin */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th { background-color: #5d4037; color: white; }
+
+/* Tombol Status */
+.btn-status {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-update { background-color: #2e7d32; color: white; } /* Hijau untuk update */

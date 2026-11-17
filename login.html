@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maduna Latimojong - Login</title>
+
+    <link rel="stylesheet" href="login_style.css">
+
+    <!-- favicon opsional -->
+    <!-- <link rel="icon" href="assets/logo.png"> -->
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <div class="title-text">
+            <div class="title login">Maduna Login</div>
+            <div class="title signup">Maduna Signup</div>
+        </div>
+
+        <div class="form-container">
+
+            <div class="slide-controls">
+
+                <input
+                    type="radio"
+                    name="slide"
+                    id="login"
+                    checked
+                >
+
+                <input
+                    type="radio"
+                    name="slide"
+                    id="signup"
+                >
+
+                <label
+                    for="login"
+                    class="slide login"
+                >
+                    Login
+                </label>
+
+                <label
+                    for="signup"
+                    class="slide signup"
+                >
+                    Signup
+                </label>
+
+                <div class="slider-tab"></div>
+
+            </div>
+
+            <div class="form-inner">
+
+                <!-- =====================
+                     LOGIN
+                ====================== -->
+
+                <form
+                    class="login"
+                    id="loginForm"
+                    novalidate
+                >
+
+                    <div class="field">
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Email Address"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Password (minimal 8 karakter)"
+                            autocomplete="current-password"
+                            minlength="8"
+                            required
+                        >
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="forgot_password.html">
+                            Lupa Password?
+                        </a>
+                    </div>
+
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+
+                        <input
+                            type="submit"
+                            value="Login"
+                        >
+                    </div>
+
+                    <div class="signup-link">
+                        Belum punya akun?
+                        <a href="">
+                            Daftar sekarang
+                        </a>
+                    </div>
+
+                </form>
+
+                <!-- =====================
+                     SIGNUP
+                ====================== -->
+
+                <form
+                    class="signup"
+                    id="signupForm"
+                    novalidate
+                >
+
+                    <div class="field">
+                        <input
+                            type="text"
+                            id="registerName"
+                            placeholder="Nama Lengkap"
+                            autocomplete="name"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="Email Address"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Password (minimal 8 karakter)"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <input
+                            type="password"
+                            id="registerConfirmPassword"
+                            placeholder="Konfirmasi Password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+                    </div>
+
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+
+                        <input
+                            type="submit"
+                            value="Daftar"
+                        >
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="ux.js"></script>
+    <script src="login.js"></script>
+
+</body>
+</html>

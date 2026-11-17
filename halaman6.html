@@ -1,0 +1,571 @@
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+.testimonial{
+
+width:100%;
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:50px;
+
+padding:40px min(5vw,60px);
+
+flex-wrap:wrap;
+
+font-family:Arial;
+
+background:
+linear-gradient(
+rgba(255,255,255,.2),
+rgba(255,255,255,.2)
+),
+url("assets/bg-maduna.jpeg");
+
+background-size:cover;
+
+background-position:center;
+
+overflow-x:hidden;
+
+}
+
+
+
+/* KIRI */
+
+.left{
+
+position:relative;
+
+width:min(60vw,620px);
+
+aspect-ratio:1;
+
+flex-shrink:0;
+
+}
+
+
+
+/* BUNDARAN */
+
+.circle{
+
+position:absolute;
+
+left:50%;
+
+top:50%;
+
+transform:translate(-50%,-50%);
+
+width:100%;
+
+height:100%;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.65);
+
+}
+
+
+
+/* FOTO */
+
+.people{
+
+position:absolute;
+
+left:50%;
+
+top:50%;
+
+transform:translate(-50%,-50%);
+
+width:100%;
+
+height:100%;
+
+}
+
+
+
+/* JUDUL */
+
+.title{
+
+position:absolute;
+
+left:50%;
+
+top:52%;
+
+transform:translate(-50%,-50%);
+
+width:52%;
+
+text-align:center;
+
+font-size:clamp(28px,3vw,33px);
+
+font-weight:700;
+
+line-height:1;
+
+color:#183A2A;
+
+z-index:1;
+
+pointer-events:none;
+
+}
+
+
+
+.title::after{
+
+content:"Suara dari Pengguna Maduna";
+
+display:block;
+
+margin-top:10px;
+
+font-size:clamp(11px,1vw,13px);
+
+color:#A17C4B;
+
+}
+
+
+
+/* FOTO */
+
+.person{
+
+position:absolute;
+
+width:clamp(80px,10vw,130px);
+
+height:clamp(80px,10vw,130px);
+
+border-radius:50%;
+
+object-fit:cover;
+
+cursor:pointer;
+
+transform:translate(-50%,-50%);
+
+z-index:10;
+
+transition:
+left .8s ease,
+top .8s ease,
+transform .5s ease;
+
+}
+
+
+
+.person.active{
+
+transform:
+translate(-50%,-50%)
+scale(1.45);
+
+z-index:50;
+
+box-shadow:0 20px 50px rgba(0,0,0,.2);
+
+}
+
+
+
+/* KANAN */
+
+.content{
+
+flex:1;
+
+min-width:280px;
+
+max-width:500px;
+
+}
+
+
+
+/* TEKS */
+
+#quote{
+
+font-size:clamp(18px,2vw,30px);
+
+line-height:1.8;
+
+}
+
+
+
+#name{
+
+margin-top:40px;
+
+font-size:clamp(28px,3vw,40px);
+
+}
+
+
+
+#role{
+
+font-size:clamp(16px,2vw,24px);
+
+color:#35693A;
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.testimonial{
+
+flex-direction:column;
+
+padding:40px 20px;
+
+min-height:auto;
+
+}
+
+.left{
+
+width:min(90vw,380px);
+
+}
+
+.title{
+
+width:70%;
+
+font-size:clamp(24px,6vw,34px);
+
+}
+
+.title::after{
+
+font-size:12px;
+
+}
+
+.person{
+
+width:clamp(65px,18vw,110px);
+
+height:clamp(65px,18vw,110px);
+
+}
+
+.person.active{
+
+transform:
+translate(-50%,-50%)
+scale(1.3);
+
+}
+
+.content{
+
+max-width:100%;
+
+text-align:center;
+
+}
+
+#quote{
+
+font-size:18px;
+
+}
+
+#name{
+
+font-size:28px;
+
+}
+
+}
+
+
+
+/* TABLET */
+
+@media(min-width:769px) and (max-width:1100px){
+
+.left{
+
+width:min(55vw,500px);
+
+}
+
+}
+
+</style>
+
+
+
+<section class="testimonial">
+
+<div class="left">
+
+<div class="circle"></div>
+
+<div class="people">
+
+<img src="assets/avatar.jpg" class="person" onclick="moveToRight(0)">
+
+<img src="assets/avatar.jpg" class="person" onclick="moveToRight(1)">
+
+<img src="assets/avatar.jpg" class="person" onclick="moveToRight(2)">
+
+<img src="assets/avatar.jpg" class="person" onclick="moveToRight(3)">
+
+</div>
+
+<div class="title">
+
+Testimonial
+
+</div>
+
+</div>
+
+
+
+<div class="content">
+
+<p id="quote"></p>
+
+<h2 id="name"></h2>
+
+<span id="role"></span>
+
+</div>
+
+</section>
+
+
+<script>
+
+const section =
+document.currentScript.previousElementSibling
+
+const data=[
+
+{
+name:"Dewi Kartika",
+role:"Pengguna Maduna",
+quote:"Bukan cuma enak, tapi terasa beda dari madu campuran yang sering dijual bebas."
+},
+
+{
+name:"Andi Saputra",
+role:"Pelanggan Maduna",
+quote:"Madunya alami dan kualitasnya terasa berbeda."
+},
+
+{
+name:"Siti Rahma",
+role:"Pengguna Maduna",
+quote:"Saya suka karena proses panennya transparan."
+},
+
+{
+name:"Rizky Pratama",
+role:"Pelanggan Maduna",
+quote:"Pengiriman aman dan kualitas tetap terjaga."
+}
+
+]
+
+const imgs =
+section.querySelectorAll(".person")
+
+const quote =
+section.querySelector("#quote")
+
+const name =
+section.querySelector("#name")
+
+const role =
+section.querySelector("#role")
+
+let order=[0,1,2,3]
+
+let activeUser=0
+
+let autoSlide
+
+
+
+function getPositions(){
+
+const box =
+section.querySelector(".people")
+
+const size =
+box.offsetWidth
+
+const center =
+size/2
+
+const radius =
+size*0.38
+
+return [
+
+{x:center,y:center-radius},
+
+{x:center+radius,y:center},
+
+{x:center,y:center+radius},
+
+{x:center-radius,y:center}
+
+]
+
+}
+
+
+
+function render(){
+
+const positions =
+getPositions()
+
+imgs.forEach((img,i)=>{
+
+const p =
+positions[order[i]]
+
+img.style.left =
+p.x+"px"
+
+img.style.top =
+p.y+"px"
+
+img.classList.remove(
+"active"
+)
+
+})
+
+const active =
+order.indexOf(1)
+
+imgs[active]
+.classList.add(
+"active"
+)
+
+quote.innerHTML =
+"“"+data[active].quote+"”"
+
+name.innerHTML =
+data[active].name
+
+role.innerHTML =
+data[active].role
+
+}
+
+
+
+window.moveToRight=function(index){
+
+activeUser=index
+
+const posisi=
+order[index]
+
+const geser=
+(1-posisi+4)%4
+
+order=
+order.map(
+v=>(v+geser)%4
+)
+
+render()
+
+restartAuto()
+
+}
+
+
+
+function nextAuto(){
+
+activeUser=
+(activeUser+1)%4
+
+moveToRight(
+activeUser
+)
+
+}
+
+
+
+function restartAuto(){
+
+clearInterval(
+autoSlide
+)
+
+autoSlide=
+setInterval(
+nextAuto,
+2000
+)
+
+}
+
+
+
+window.addEventListener(
+"resize",
+()=>{
+
+render()
+
+}
+)
+
+
+
+setTimeout(()=>{
+
+render()
+
+restartAuto()
+
+},500)
+
+</script>
