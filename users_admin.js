@@ -1,3 +1,7 @@
+// ======================
+// API SETUP & INIT
+// ======================
+const API_ENDPOINT = window.API_BASE || "https://maduna-backend.vercel.app";
 let allUsers = [];
 
 // ======================
@@ -10,7 +14,8 @@ async function loadUsers() {
 
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:5000/api/admin/users", {
+        // PERBAIKAN: Menggunakan API_ENDPOINT
+        const response = await fetch(`${API_ENDPOINT}/api/admin/users`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -150,7 +155,7 @@ if (refreshBtn) {
 // MODAL EDIT
 // ======================
 
-function openEditModal(id, name, email, role) {
+window.openEditModal = function(id, name, email, role) {
     const modal = document.getElementById("editModal");
     if (modal) modal.style.display = "flex";
 
@@ -158,7 +163,7 @@ function openEditModal(id, name, email, role) {
     document.getElementById("editName").value = name || "";
     document.getElementById("editEmail").value = email || "";
     document.getElementById("editRole").value = role || "customer";
-}
+};
 
 const closeModalBtn = document.getElementById("closeModalBtn");
 if (closeModalBtn) {
@@ -206,7 +211,8 @@ if (saveUserBtn) {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+            // PERBAIKAN: Menggunakan API_ENDPOINT
+            const response = await fetch(`${API_ENDPOINT}/api/admin/users/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -228,7 +234,22 @@ if (saveUserBtn) {
             }
 
             document.getElementById("editModal").style.display = "none";
-            showToast("Data pengguna berhasil diperbarui!", "success");
+            
+            // Fallback showToast
+            if (typeof showToast === 'function') {
+                showToast("Data pengguna berhasil diperbarui!", "success");
+            } else if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Data pengguna berhasil diperbarui!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
             loadUsers();
 
         } catch (error) {
@@ -264,7 +285,8 @@ window.deleteUser = async function(id) {
         if (result.isConfirmed) {
             try {
                 const token = localStorage.getItem("token");
-                const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                // PERBAIKAN: Menggunakan API_ENDPOINT
+                const response = await fetch(`${API_ENDPOINT}/api/admin/users/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -281,7 +303,21 @@ window.deleteUser = async function(id) {
                     throw new Error(data.message || "Gagal menghapus pengguna");
                 }
 
-                showToast("Pengguna berhasil dihapus!", "success");
+                // Fallback showToast
+                if (typeof showToast === 'function') {
+                    showToast("Pengguna berhasil dihapus!", "success");
+                } else if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Pengguna berhasil dihapus!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+                
                 loadUsers();
 
             } catch (error) {
